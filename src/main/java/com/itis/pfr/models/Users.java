@@ -7,21 +7,25 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class Users implements UserDetails {
     @Id
     private String id;
     private String firstName;
     private String lastName;
 
-    @Indexed(unique = true)
     private String email;
 
     private String password;
@@ -41,4 +45,39 @@ public class Users {
     }
 
 
+    @Override
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        //SimpleGrantedAuthority authority = new SimpleGrantedAuthority( );
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+        for(Roles u: this.roles){
+            authorityList.add(new SimpleGrantedAuthority(u.toString()));
+        }
+
+        return authorityList;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
