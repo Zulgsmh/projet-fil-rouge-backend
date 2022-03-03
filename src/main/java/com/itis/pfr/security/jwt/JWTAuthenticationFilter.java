@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itis.pfr.models.Users;
 import com.itis.pfr.security.SecurityConfiguration;
+import com.itis.pfr.services.TokenService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-
+	private final TokenService tokenService;
 	private AuthenticationManager authenticationManager;
 	private SecurityConfiguration configuration;
 
@@ -68,6 +69,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withIssuer("auth0")
 				.withIssuer(request.getRequestURL().toString())
 				.sign(Algorithm.HMAC512(configuration.getSecret()));
+
+		//save token in db
+		tokenService.addToken(token);
+
 		response.setHeader("access_token", token);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
