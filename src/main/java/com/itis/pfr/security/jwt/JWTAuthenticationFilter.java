@@ -8,6 +8,7 @@ import com.itis.pfr.security.SecurityConfiguration;
 import com.itis.pfr.services.TokenService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private final TokenService tokenService;
 	private AuthenticationManager authenticationManager;
 	private SecurityConfiguration configuration;
 
@@ -70,15 +70,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withIssuer(request.getRequestURL().toString())
 				.sign(Algorithm.HMAC512(configuration.getSecret()));
 
-		//save token in db
-		tokenService.addToken(token);
-
 		response.setHeader("access_token", token);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(token);
 		response.getWriter().flush();
 	}
-
 
 }

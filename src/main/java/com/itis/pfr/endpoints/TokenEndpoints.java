@@ -17,7 +17,7 @@ public class TokenEndpoints {
     private final TokenService tokenService;
 
     @PostMapping("/{token}")
-    public HttpResponse addToken(@RequestParam("token") String token){
+    public HttpResponse addToken(@PathVariable("token") String token){
         return HttpResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .message("token added")
@@ -28,7 +28,7 @@ public class TokenEndpoints {
     }
 
     @GetMapping("/{token}")
-    public HttpResponse searchToken(@RequestParam("token") String token){
+    public HttpResponse searchToken(@PathVariable("token") String token){
         return HttpResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .message("token find")
@@ -39,7 +39,7 @@ public class TokenEndpoints {
     }
 
     @DeleteMapping("/{token}")
-    public HttpResponse deleteToken(@RequestParam("token") String token){
+    public HttpResponse deleteToken(@PathVariable("token") String token){
         return HttpResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .message("token deleted")

@@ -2,6 +2,7 @@ package com.itis.pfr.security;
 
 import com.itis.pfr.security.jwt.JWTAuthenticationFilter;
 import com.itis.pfr.security.jwt.JWTAuthorizationFilter;
+import com.itis.pfr.services.TokenService;
 import com.itis.pfr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
