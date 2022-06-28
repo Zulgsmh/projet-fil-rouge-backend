@@ -65,6 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, REFRESH_ENPOINT).hasAnyAuthority("STUDENT", "ADMIN")
 
                 /** Container API */
+                .antMatchers(HttpMethod.GET, CONTAINER_ENDPOINTS).hasAnyAuthority("ADMIN", "STUDENT")
+                .antMatchers(HttpMethod.POST, CONTAINER_ENDPOINTS).hasAnyAuthority("ADMIN", "STUDENT")
+                .antMatchers(HttpMethod.DELETE, CONTAINER_ENDPOINTS).hasAnyAuthority("ADMIN", "STUDENT")
 
                 /** User API */
                 .antMatchers(HttpMethod.DELETE, USER_ENDPOINTS).hasAnyAuthority("ADMIN")

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,9 @@ public class Users implements UserDetails {
     private String country;
     private List<Roles> roles;
     private LocalDateTime createdAt;
-    private List<Container> containers;
+
+    @DBRef
+    private List<Container> container;
 
     public Users(String firstName, String lastName, String email, String password, String country, List<Roles> roles, LocalDateTime createdAt) {
         this.firstName = firstName;

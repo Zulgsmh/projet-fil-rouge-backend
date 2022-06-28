@@ -1,3 +1,6 @@
+application.docker.dockerApiVersion: 1.41
+application.test.instance.ip: localhost
+application.test.instance.port: 2375
 application.security.refreshToken.secret : refreshSecret
 application.security.token.secret: secret
 server:
