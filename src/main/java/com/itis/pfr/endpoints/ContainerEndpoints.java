@@ -19,28 +19,6 @@ public class ContainerEndpoints {
         this.containerService = containerService;
     }
 
-    @PostMapping("/start")
-    public HttpResponse startContainer(@RequestParam("containerId") String containerId, @RequestParam("userId") String userId) {
-        return HttpResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .message("container created")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .data(Map.of("container", containerService.startContainer(containerId, userId)))
-                .build();
-    }
-
-    @PostMapping("/stop")
-    public HttpResponse stopContainer(@RequestParam("containerId") String containerId, @RequestParam("userId") String userId) {
-        return HttpResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .message("container created")
-                .status(HttpStatus.OK)
-                .statusCode(HttpStatus.OK.value())
-                .data(Map.of("container", containerService.startContainer(containerId, userId)))
-                .build();
-    }
-
     @PostMapping
     public HttpResponse createContainer(@RequestBody ContainerRequestBody containerRequestBody) {
         return HttpResponse.builder()
@@ -51,6 +29,30 @@ public class ContainerEndpoints {
                 .data(Map.of("container", containerService.createContainer(containerRequestBody)))
                 .build();
     }
+
+    @GetMapping("/start")
+    public HttpResponse startContainer(@RequestParam("dockerContainerId") String dockerContainerId, @RequestParam("containerId") String containerId, @RequestParam("userId") String userId) {
+        return HttpResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message("container created")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .data(Map.of("container", containerService.startContainer(containerId, userId, dockerContainerId)))
+                .build();
+    }
+
+    @GetMapping("/stop")
+    public HttpResponse stopContainer(@RequestParam("dockerContainerId") String dockerContainerId, @RequestParam("containerId") String containerId, @RequestParam("userId") String userId) {
+        return HttpResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message("container created")
+                .status(HttpStatus.OK)
+                .statusCode(HttpStatus.OK.value())
+                .data(Map.of("container", containerService.stopContainer(containerId, userId, dockerContainerId)))
+                .build();
+    }
+
+
 
     @GetMapping("/user/{userId}")
     public HttpResponse getAllContainerOfUser(@PathVariable("userId") String userId) {

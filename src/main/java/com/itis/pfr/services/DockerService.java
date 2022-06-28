@@ -83,13 +83,13 @@ public class DockerService {
 
     public String createContainer (CreateContainerDTO createContainerDTO) {
         try {
-            return dockerConfig.getDockerClient().createContainerCmd(createContainerDTO.image()+ ":" + createContainerDTO.version())
-                    .withCmd(createContainerDTO.cmd())
-                    .withName(createContainerDTO.name())
-                    .withHostName(createContainerDTO.hostname())
-                    .withEnv(createContainerDTO.envVariables())
-                    .withPortBindings(PortBinding.parse(createContainerDTO.internalPort() + ":"+ createContainerDTO.externalPort()))
-                    .withBinds(Bind.parse(createContainerDTO.internalData() + ":" + createContainerDTO.externalData()))
+            return dockerConfig.getDockerClient().createContainerCmd(createContainerDTO.getImage()+ ":" + createContainerDTO.getVersion())
+                    .withCmd(createContainerDTO.getCmd())
+                    .withName(createContainerDTO.getName())
+                    .withHostName(createContainerDTO.getHostname())
+                    .withEnv(createContainerDTO.getEnvVariables())
+                    .withPortBindings(PortBinding.parse(createContainerDTO.getExternalPort() + ":"+ createContainerDTO.getInternalPort()))
+                    //.withBinds(Bind.parse(createContainerDTO.internalData() + ":" + createContainerDTO.externalData()))
                     .exec()
                     .getId();
 

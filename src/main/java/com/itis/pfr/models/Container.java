@@ -24,18 +24,20 @@ public class Container {
     private String dockerContainerId;
     private String privateKey;
     private String ipAddress;
+    private Integer portOccuped;
 
     @DBRef
     private Users users;
     private LocalDateTime createdAt;
 
-    public Container(String name, List<String> servicesInstalled, String dns, String dockerContainerId , String privateKey, String ipAddress, Users user, LocalDateTime createdAt) {
+    public Container(String name, List<String> servicesInstalled, String dns, String dockerContainerId , String privateKey, String ipAddress, Integer portOccuped, Users user, LocalDateTime createdAt) {
         this.dockerContainerId = dockerContainerId;
         this.name = name;
         this.servicesInstalled = servicesInstalled;
         this.dns = dns;
         this.privateKey = privateKey;
         this.ipAddress = ipAddress;
+        this.portOccuped = portOccuped;
         this.users = user;
         this.createdAt = createdAt;
     }
